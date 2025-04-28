@@ -1,0 +1,45 @@
+changelog:
+  categories:
+    - title: 🎉 Features
+      labels:
+        - feature
+    - title: 🐛 Bug Fixes
+      labels:
+        - bug
+    - title: 🛠 Improvements
+      labels:
+        - enhancement
+    - title: 🧹 Maintenance
+      labels:
+        - chore
+    - title: ❓ Other Changes
+      labels:
+        - "*"
+
+template: |
+  # 📦 Release $RESOLVED_VERSION
+
+  ## ✨ Highlights
+
+  - Initial Release of **SetInput**
+  - Support for DisplayPort, HDMI Input Switching
+  - Supports both SingleFile and SelfContained Builds
+
+  ## 🔧 Build Types
+
+  | Build | Description |
+  |:--|:--|
+  | `SetInput_Single.exe` | Small file, requires installed .NET 8 Runtime |
+  | `SetInput_SelfContained.exe` | Standalone file, no additional runtime needed |
+
+  ## 🚀 Installation
+
+  Download the preferred executable from the assets below.
+
+  ## 📜 License
+
+  Licensed under the MIT License.
+
+  ---
+
+  _This release was automatically generated. 🚀_
