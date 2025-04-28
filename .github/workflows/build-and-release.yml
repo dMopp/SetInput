@@ -11,21 +11,33 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - name: Check GitHub Runner Version
+        run: |
+          Write-Host "Running on GitHub Runner OS: $env:RUNNER_OS"
+          Write-Host "Runner Image: $env:ImageOS"
+
+          if ($env:RUNNER_OS -ne "Windows" -or $env:ImageOS -notmatch "windows") {
+            Write-Error "Unsupported runner detected! This workflow requires a Windows runner."
+            exit 1
+          }
+        shell: pwsh
+
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup .NET (LTS Only)
+      - name: Setup .NET 8
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
-          include-prerelease: false
 
-      - name: Check installed .NET version
+      - name: Confirm Correct .NET Version
         run: |
           $version = dotnet --version
           if ($version -notmatch "^8\.0\.\d+$") {
-            Write-Error "Invalid .NET SDK version detected: $version. Expected 8.0.x."
-            exit 1
+            Write-Host "Installed .NET version: $version"
+            throw "Invalid .NET SDK version detected. Expected 8.0.x."
+          } else {
+            Write-Host "✅ .NET 8.x correctly installed and active: $version"
           }
         shell: pwsh
 
