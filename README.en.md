@@ -92,5 +92,5 @@ See [LICENSE](LICENSE) for details.
 
 ## Credits
 
-- Idea & implementation: [Your Name or Organization]
+- Idea & implementation: @dMopp
 - DDC/CI low-level access via Windows dxva2.dll
