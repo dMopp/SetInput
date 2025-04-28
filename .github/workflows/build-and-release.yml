@@ -16,16 +16,18 @@ jobs:
           Write-Host "Running on GitHub Runner OS: $env:RUNNER_OS"
           Write-Host "Runner Image: $env:ImageOS"
 
-          if ($env:RUNNER_OS -ne "Windows" -or $env:ImageOS -notmatch "windows") {
+          if ($env:ImageOS -notmatch "(?i)windows") {
             Write-Error "Unsupported runner detected! This workflow requires a Windows runner."
             exit 1
+          } else {
+            Write-Host "✅ Windows Runner detected: $env:ImageOS"
           }
         shell: pwsh
 
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup .NET 8
+      - name: Setup .NET 8 LTS
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
@@ -37,7 +39,7 @@ jobs:
             Write-Host "Installed .NET version: $version"
             throw "Invalid .NET SDK version detected. Expected 8.0.x."
           } else {
-            Write-Host "✅ .NET 8.x correctly installed and active: $version"
+            Write-Host "✅ Correct .NET version detected: $version"
           }
         shell: pwsh
 
@@ -45,11 +47,13 @@ jobs:
         run: |
           dotnet publish -c Release -r win-x64 --self-contained false /p:PublishSingleFile=true -o ./publish/Single
           Rename-Item ./publish/Single/SetInput.exe SetInput_Single.exe
+        shell: pwsh
 
       - name: Build SelfContained Version
         run: |
           dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true -o ./publish/SelfContained
           Rename-Item ./publish/SelfContained/SetInput.exe SetInput_SelfContained.exe
+        shell: pwsh
 
       - name: Upload EXEs to Release
         uses: softprops/action-gh-release@v2
