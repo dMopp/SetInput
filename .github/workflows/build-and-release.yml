@@ -6,6 +6,9 @@ on:
       - 'v*.*.*'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
@@ -45,17 +48,23 @@ jobs:
 
       - name: Build SingleFile Version
         run: |
-          dotnet publish -c Release -r win-x64 --self-contained false /p:PublishSingleFile=true -o ./publish/Single
+          dotnet publish ./SetInput.csproj -c Release -r win-x64 --self-contained false /p:PublishSingleFile=true -o ./publish/Single
           Rename-Item ./publish/Single/SetInput.exe SetInput_Single.exe
         shell: pwsh
 
       - name: Build SelfContained Version
         run: |
-          dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true -o ./publish/SelfContained
+          dotnet publish ./SetInput.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true -o ./publish/SelfContained
           Rename-Item ./publish/SelfContained/SetInput.exe SetInput_SelfContained.exe
         shell: pwsh
 
-      - name: Upload EXEs to Release
+      - name: Move build artifacts to workspace
+        run: |
+          Move-Item ./publish/Single/SetInput_Single.exe .
+          Move-Item ./publish/SelfContained/SetInput_SelfContained.exe
+        shell: pwsh
+
+      - name: Upload EXEs to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
