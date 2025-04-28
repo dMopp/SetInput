@@ -16,11 +16,11 @@ jobs:
           Write-Host "Running on GitHub Runner OS: $env:RUNNER_OS"
           Write-Host "Runner Image: $env:ImageOS"
 
-          if ($env:ImageOS -notmatch "(?i)windows") {
+          if ($env:ImageOS -notmatch "(?i)(windows|win)") {
             Write-Error "Unsupported runner detected! This workflow requires a Windows runner."
             exit 1
           } else {
-            Write-Host "✅ Windows Runner detected: $env:ImageOS"
+            Write-Host "✅ Windows-compatible Runner detected: $env:ImageOS"
           }
         shell: pwsh
 
