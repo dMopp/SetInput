@@ -1,0 +1,21 @@
+# Ignore build artifacts
+bin/
+obj/
+
+# Ignore publish folder completely
+publish/
+
+# VSCode and IDE settings
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Temporary and system files
+*.log
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db

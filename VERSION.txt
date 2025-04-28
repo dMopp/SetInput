@@ -1,0 +1,13 @@
+# SetInput Versioning
+
+Current Version: 1.0.0
+
+---
+
+Changelog:
+
+v1.0.0 - 2025-04-28
+- Initial release
+- Added SingleFile build (requires .NET 8)
+- Added SelfContained build (standalone)
+- Basic input switching functionality (DisplayPort, HDMI1, HDMI2)
